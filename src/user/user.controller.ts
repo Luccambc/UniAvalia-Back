@@ -19,7 +19,7 @@ export class UserController {
 
   @Get()
   async findOne(@GetUser() tokenPayload: TokenPayload) {
-    return await this.userService.FindUser(tokenPayload.userEmail);
+    return await this.userService.findOne(tokenPayload.userId);
   }
 
   @Patch()
@@ -27,11 +27,11 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
     @GetUser() tokenPayload: TokenPayload,
   ) {
-    return await this.userService.update(tokenPayload.userEmail, updateUserDto);
+    return await this.userService.update(tokenPayload.userId, updateUserDto);
   }
 
   @Delete()
   async remove(@GetUser() tokenPayload: TokenPayload) {
-    return await this.userService.remove(tokenPayload.userEmail);
+    return await this.userService.remove(tokenPayload.userId);
   }
 }

@@ -1,14 +1,20 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { IsStrongPassword } from 'class-validator';
+import { PassThrough } from 'stream';
 
 @Injectable()
 export class UserService {
   constructor(private primsa: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
+    const existingUser = await this.primsa.user.findUnique({
+      where: { email: createUserDto.email },
+    });
+    if (existingUser) throw new ConflictException('Email already exists');
     return await this.primsa.user.create({
       data: {
         ...createUserDto,
@@ -16,7 +22,16 @@ export class UserService {
     });
   }
 
-  async FindUser(email: string) {
+  async findOne(id: number) {
+    const user = await this.primsa.findUnique({
+      where: { id },
+    });
+    if (!user) throw new NotFoundException('User not found');
+    const { password, ...user} = userNoPassword;
+    return userNoPassword;
+  }
+
+  async findOneByEmail(email: string) {
     const user = await this.primsa.user.findUnique({
       where: { email },
     });
@@ -24,20 +39,20 @@ export class UserService {
     return user;
   }
 
-  async update(email: string, updateUserDto: UpdateUserDto) {
-    const user = await this.FindUser(email);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.findOne(id);
 
     if (!user) throw new NotFoundException('User not found');
 
     return await this.primsa.user.update({
       data: updateUserDto,
-      where: { email },
+      where: { id },
     });
   }
 
-  async remove(email: string) {
-    const user = await this.FindUser(email);
+  async remove(id: number) {
+    const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found');
-    return await this.primsa.user.delete({ where: { email } });
+    return await this.primsa.user.delete({ where: { id } });
   }
 }
