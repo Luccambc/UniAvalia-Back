@@ -32,5 +32,5 @@ export class CreateUserDto {
 
   @IsOptional({ message: 'ProfilePicture is optional' })
   @IsBase64()
-  profilePicture: string;
+  profilePicture?: string;
 }
