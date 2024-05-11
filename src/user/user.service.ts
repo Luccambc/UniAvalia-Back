@@ -3,19 +3,17 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { IsStrongPassword } from 'class-validator';
-import { PassThrough } from 'stream';
 
 @Injectable()
 export class UserService {
-  constructor(private primsa: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    const existingUser = await this.primsa.user.findUnique({
+    const existingUser = await this.prisma.user.findUnique({
       where: { email: createUserDto.email },
     });
     if (existingUser) throw new ConflictException('Email already exists');
-    return await this.primsa.user.create({
+    return await this.prisma.user.create({
       data: {
         ...createUserDto,
       },
@@ -23,16 +21,16 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    const user = await this.primsa.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { id },
     });
     if (!user) throw new NotFoundException('User not found');
-    const { password, ...user} = userNoPassword;
+    const { password, ...userNoPassword } = user;
     return userNoPassword;
   }
 
   async findOneByEmail(email: string) {
-    const user = await this.primsa.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { email },
     });
     if (!user) throw new NotFoundException('User not found');
@@ -44,7 +42,7 @@ export class UserService {
 
     if (!user) throw new NotFoundException('User not found');
 
-    return await this.primsa.user.update({
+    return await this.prisma.user.update({
       data: updateUserDto,
       where: { id },
     });
@@ -53,6 +51,6 @@ export class UserService {
   async remove(id: number) {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found');
-    return await this.primsa.user.delete({ where: { id } });
+    return await this.prisma.user.delete({ where: { id } });
   }
 }

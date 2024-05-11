@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import {
   IsBase64,
   IsEmail,
+  IsNumber,
   IsOptional,
   IsString,
   IsStrongPassword,
@@ -10,27 +11,27 @@ import {
 import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-  @IsOptional({ message: 'Nome is required' })
+  @IsOptional({ message: 'Nome is optional' })
   @IsString({ message: 'Nome must be a string' })
-  nome: string;
+  nome?: string;
 
-  @IsOptional({ message: 'Email is required' })
+  @IsOptional({ message: 'Email is optional' })
   @IsEmail()
-  email: string;
+  email?: string;
 
-  @IsOptional({ message: 'Password is required' })
+  @IsOptional({ message: 'Password is optional' })
   @IsStrongPassword()
-  password: string;
+  password?: string;
 
-  @IsOptional({ message: 'Semester is required' })
-  @IsString({ message: 'Semester must be a string' })
-  semester: string;
-
-  @IsOptional({ message: 'Major is required' })
+  @IsOptional({ message: 'Major is optional' })
   @IsString({ message: 'Major must be a string' })
-  major: string;
+  major?: string;
+
+  @IsOptional({ message: 'Semester is optional' })
+  @IsNumber()
+  semester?: number;
 
   @IsOptional({ message: 'ProfilePicture is optional' })
   @IsBase64()
-  profilePicture: string;
+  profilePicture?: string;
 }
