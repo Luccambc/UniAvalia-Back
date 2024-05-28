@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   ConflictException,
   Injectable,
@@ -11,19 +10,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
-
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'lucca',
-      password: '123456',
-    },
-    {
-      userId: 2,
-      username: 'leandro',
-      password: '654321',
-    },
-  ];
 
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.prisma.user.findUnique({
@@ -55,14 +41,6 @@ export class UserService {
     return user;
   }
 
-  async findOneByUsername(username: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { username },
-    });
-    if (!user) throw new NotFoundException('User not found');
-    return user;
-  }
-
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
 
@@ -77,6 +55,8 @@ export class UserService {
   async remove(id: number) {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not found');
-    return await this.prisma.user.delete({ where: { id } });
+    return await this.prisma.user.delete({ 
+      where: { id } 
+    });
   }
 }

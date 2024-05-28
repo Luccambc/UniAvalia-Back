@@ -14,14 +14,16 @@ export class AuthService {
   ) {}
 
   async signIn(
-    username: string,
+    email: string,
     inputPassword: string,
   ): Promise<{ access_token: string }> {
-    const user = await this.userService.findOneByUsername(username);
+    const user = await this.userService.findOneByEmail(email);
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    console.log('cheguei')
 
     if (user?.password != inputPassword) {
       throw new UnauthorizedException();

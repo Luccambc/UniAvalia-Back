@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { GetUser } from 'src/customDecorators/getUser';
 import { Public } from 'src/customDecorators/public';
