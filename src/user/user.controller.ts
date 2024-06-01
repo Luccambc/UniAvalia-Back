@@ -1,12 +1,12 @@
-import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
-import { GetUser } from 'src/customDecorators/getUser';
-import { Public } from 'src/customDecorators/public';
-import { TokenPayload } from 'src/types/tokenPayload';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserService } from './user.service';
+import { Body, Controller, Delete, Get, Patch, Post } from "@nestjs/common";
+import { GetUser } from "src/customDecorators/getUser";
+import { Public } from "src/customDecorators/public";
+import { TokenPayload } from "src/types/tokenPayload";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { UserService } from "./user.service";
 
-@Controller('user')
+@Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

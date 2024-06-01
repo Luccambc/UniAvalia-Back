@@ -1,5 +1,5 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { TokenPayload } from 'src/types/tokenPayload';
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
+import { TokenPayload } from "src/types/tokenPayload";
 
 export const GetUser = createParamDecorator(
   (data: keyof TokenPayload | undefined, ctx: ExecutionContext) => {

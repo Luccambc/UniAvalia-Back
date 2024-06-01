@@ -7,25 +7,25 @@ import {
   Post,
   Request,
   UseGuards,
-} from '@nestjs/common';
-import { Public } from 'src/customDecorators/public';
-import { AuthGuard } from './auth.guard';
-import { AuthService } from './auth.service';
-import { SignInDto } from './dto/sign-in.dto';
+} from "@nestjs/common";
+import { Public } from "src/customDecorators/public";
+import { AuthGuard } from "./auth.guard";
+import { AuthService } from "./auth.service";
+import { SignInDto } from "./dto/sign-in.dto";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
   @Public()
-  @Post('login')
+  @Post("login")
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
   @UseGuards(AuthGuard)
-  @Get('profile')
+  @Get("profile")
   getProfile(@Request() req) {
     return req.user;
   }

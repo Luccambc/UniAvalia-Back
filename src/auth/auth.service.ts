@@ -2,9 +2,9 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
+} from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class AuthService {
@@ -20,10 +20,10 @@ export class AuthService {
     const user = await this.userService.findOneByEmail(email);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException("User not found");
     }
 
-    console.log('cheguei')
+    console.log("cheguei");
 
     if (user?.password != inputPassword) {
       throw new UnauthorizedException();
