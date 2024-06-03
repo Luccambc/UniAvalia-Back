@@ -1,10 +1,7 @@
-/* eslint-disable prettier/prettier */
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { IsStrongPassword } from 'class-validator';
-import { PassThrough } from 'stream';
 
 @Injectable()
 export class UserService {
