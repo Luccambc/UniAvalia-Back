@@ -2,6 +2,7 @@ import {
   IsBase64,
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   IsStrongPassword,
@@ -21,8 +22,8 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty({ message: 'Semester is required' })
-  @IsString({ message: 'Semester must be a string' })
-  semester: string;
+  @IsNumber()
+  semester: number;
 
   @IsNotEmpty({ message: 'Major is required' })
   @IsString({ message: 'Major must be a string' })
