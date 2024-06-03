@@ -9,13 +9,13 @@ import {
 } from 'class-validator';
 
 export class CreateUserDto {
-  @IsNotEmpty({ message: 'Name is required' })
-  @IsString({ message: 'Name must be a string' })
-  name: string;
-
   @IsNotEmpty({ message: 'Email is required' })
   @IsEmail()
   email: string;
+
+  @IsNotEmpty({ message: 'Name is required' })
+  @IsString({ message: 'Name must be a string' })
+  name: string;
 
   @IsNotEmpty({ message: 'Password is required' })
   @IsStrongPassword()
@@ -31,5 +31,5 @@ export class CreateUserDto {
 
   @IsOptional({ message: 'ProfilePicture is optional' })
   @IsBase64()
-  profilePicture: string;
+  profilePicture?: string;
 }
