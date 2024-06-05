@@ -17,8 +17,8 @@ export class UserController {
   }
 
   @Get()
-  async findOne(@GetUser() tokenPayload: TokenPayload) {
-    return await this.userService.findOne(tokenPayload.userId);
+  async findOneById(@GetUser() tokenPayload: TokenPayload) {
+    return await this.userService.findOneById(tokenPayload.userId);
   }
 
   @Patch()
