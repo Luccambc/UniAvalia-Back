@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -13,7 +17,7 @@ export class UserService {
     });
     if (existingUser) throw new ConflictException('Email already exists');
     return await this.prisma.user.create({
-      data: createUserDto
+      data: createUserDto,
     });
   }
 
@@ -30,7 +34,7 @@ export class UserService {
       where: { email },
     });
     if (!user) throw new NotFoundException('User not found');
-    return user
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

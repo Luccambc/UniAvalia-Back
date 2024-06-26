@@ -7,26 +7,23 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
 
-
-  @Module({
-    imports: [
-      UserModule,
-      JwtModule.register({
-        global: true,
-        secret: jwtConstants.secret,
-        signOptions: { expiresIn: '10m' },
-      })
-    ],
-    controllers: [AuthController],
-    providers: [
-      AuthService,
-      {
-        provide: APP_GUARD,
-        useClass: AuthGuard,
-      } 
-    ],
-    exports: [AuthService]
-  })
-  export class AuthModule {
-  };
-
+@Module({
+  imports: [
+    UserModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '10m' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
+  exports: [AuthService],
+})
+export class AuthModule {}
